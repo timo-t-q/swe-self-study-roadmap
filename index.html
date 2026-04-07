@@ -1,464 +1,556 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SWE Self-Study Blueprint</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #09090f;
-    --bg-soft: #0d0d16;
-    --surface: #111118;
-    --surface-soft: #12121d;
-    --border: #1e1e2e;
-    --text: #e2e8f0;
-    --muted: #64748b;
-    --soft: #94a3b8;
-    --blue: #3b82f6;
-    --blue-dim: #1d3461;
-    --green: #10b981;
-    --green-dim: #064e3b;
-    --amber: #f59e0b;
-    --amber-dim: #78350f;
-    --purple: #a78bfa;
-    --purple-dim: #2e1065;
-    --shadow: 0 22px 50px rgba(0, 0, 0, 0.3);
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SWE Self-Study Blueprint</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #000000;
+      --bg-panel: #0a0a0a;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.15);
+      --text-main: #ededed;
+      --text-muted: #888888;
+      --accent: #ffffff;
+      --glow: rgba(255, 255, 255, 0.03);
+    }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  body {
-    font-family: 'Manrope', sans-serif;
-    color: var(--text);
-    background:
-      radial-gradient(1200px 700px at 0% -20%, #1d346138, transparent 60%),
-      radial-gradient(900px 600px at 120% -10%, #064e3b22, transparent 60%),
-      radial-gradient(1000px 500px at 50% 120%, #2e10652d, transparent 68%),
-      linear-gradient(180deg, #09090f 0%, #0b0b13 100%);
-    min-height: 100vh;
-    line-height: 1.7;
-    font-size: 15px;
-  }
+    html {
+      scroll-behavior: smooth;
+    }
 
-  .shell {
-    max-width: 1220px;
-    margin: 0 auto;
-    padding: 30px 20px 80px;
-  }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
 
-  .hero {
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    border-radius: 28px;
-    padding: 42px 36px 34px;
-    background:
-      linear-gradient(145deg, #131320 0%, #0f0f19 55%, #0d0d16 100%);
-    box-shadow: var(--shadow);
-    margin-bottom: 18px;
-  }
+    /* Layout */
+    .app-container {
+      display: flex;
+      min-height: 100vh;
+      max-width: 1440px;
+      margin: 0 auto;
+      position: relative;
+    }
 
-  .hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(500px 250px at 20% 0%, #3b82f61e, transparent 70%),
-      radial-gradient(400px 220px at 90% 10%, #10b98117, transparent 70%);
-    pointer-events: none;
-  }
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 48px 32px;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border);
+      background: var(--bg);
+      z-index: 10;
+    }
 
-  .eyebrow {
-    font: 500 11px 'IBM Plex Mono', monospace;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 16px;
-  }
+    .brand {
+      margin-bottom: 64px;
+    }
 
-  h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2.25rem, 5vw, 4rem);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin-bottom: 14px;
-  }
-  h1 .accent { color: var(--blue); }
+    .brand-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
 
-  .subtitle {
-    max-width: 760px;
-    color: var(--soft);
-    font-size: 16px;
-  }
+    .brand-title {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
 
-  .hero-meta {
-    margin-top: 18px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
-  .meta-chip {
-    border: 1px solid #21324b;
-    background: #0f1a2b;
-    color: #93c5fd;
-    border-radius: 999px;
-    padding: 6px 12px;
-    font: 500 11px 'IBM Plex Mono', monospace;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      display: block;
+    }
 
-  .tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 20px;
-    padding: 8px;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    background: rgba(17, 17, 24, 0.6);
-    backdrop-filter: blur(8px);
-  }
+    .nav-link:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.03);
+    }
 
-  .tab {
-    border: 1px solid transparent;
-    border-radius: 10px;
-    padding: 10px 14px;
-    background: transparent;
-    color: var(--muted);
-    font: 600 13px 'Manrope', sans-serif;
-    cursor: pointer;
-    transition: 0.2s ease;
-  }
-  .tab:hover { color: var(--text); background: #141420; }
-  .tab.active {
-    color: #dbeafe;
-    background: linear-gradient(180deg, #1b2c4a 0%, #13243f 100%);
-    border-color: #2c4d7b;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  }
+    .nav-link.active {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
 
-  .section { display: none; animation: reveal .35s ease both; }
-  .section.active { display: block; }
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 64px 80px 120px;
+      max-width: 960px;
+    }
 
-  @keyframes reveal {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+    section {
+      margin-bottom: 120px;
+      scroll-margin-top: 100px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-  .quote {
-    margin-bottom: 14px;
-    border: 1px solid #1f2f47;
-    border-left: 3px solid var(--blue);
-    border-radius: 14px;
-    background: linear-gradient(180deg, #101724 0%, #0f1420 100%);
-    color: #b9cbe3;
-    padding: 16px 18px;
-    font-style: italic;
-  }
+    section.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-  .section-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.25rem;
-    margin: 8px 0 12px;
-  }
+    .section-header {
+      margin-bottom: 40px;
+    }
 
-  .grid-2,
-  .grid-3,
-  .grid-4 {
-    display: grid;
-    gap: 12px;
-  }
-  .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .section-title {
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
 
-  .card {
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    background: linear-gradient(180deg, var(--surface-soft) 0%, var(--surface) 100%);
-    padding: 16px;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  }
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 600px;
+    }
 
-  .phase { border-top: 2px solid var(--blue); }
-  .phase.p2 { border-top-color: var(--green); }
-  .phase.p3 { border-top-color: var(--amber); }
-  .phase.p4 { border-top-color: var(--purple); }
+    /* Bento Grid */
+    .bento-grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: repeat(12, 1fr);
+    }
 
-  .kicker {
-    font: 500 10px 'IBM Plex Mono', monospace;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 7px;
-  }
+    .bento-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s ease;
+    }
 
-  .card h3 {
-    font-family: 'Syne', sans-serif;
-    font-size: 1rem;
-    margin-bottom: 8px;
-  }
-  .card p { color: var(--soft); font-size: 14px; }
+    .bento-card:hover {
+      border-color: var(--border-hover);
+    }
 
-  .chips { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
-  .chip {
-    border: 1px solid #2a2a3f;
-    background: #161624;
-    border-radius: 6px;
-    padding: 3px 8px;
-    color: #a9b7cf;
-    font: 500 10px 'IBM Plex Mono', monospace;
-  }
+    .bento-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      background: radial-gradient(circle at top left, var(--glow), transparent 70%);
+      pointer-events: none;
+    }
 
-  .resource .tag,
-  .salary .tag {
-    display: inline-block;
-    margin-top: 10px;
-    font: 500 10px 'IBM Plex Mono', monospace;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    border-radius: 999px;
-    padding: 3px 8px;
-  }
-  .tag.free { background: #052e1e; color: #6ee7b7; border: 1px solid var(--green-dim); }
-  .tag.paid { background: #2a1200; color: #fcd34d; border: 1px solid var(--amber-dim); }
+    /* Card Spans */
+    .col-span-12 { grid-column: span 12; }
+    .col-span-8 { grid-column: span 8; }
+    .col-span-6 { grid-column: span 6; }
+    .col-span-4 { grid-column: span 4; }
 
-  .salary .range {
-    color: #93c5fd;
-    font: 500 12px 'IBM Plex Mono', monospace;
-    margin-bottom: 6px;
-  }
+    /* Typography inside cards */
+    .card-kicker {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      display: block;
+    }
 
-  .salary.alt .range {
-    color: #6ee7b7;
-  }
+    .card-title {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
 
-  .checklist .item {
-    display: flex;
-    gap: 10px;
-    padding: 11px 0;
-    border-bottom: 1px solid #1a1a2a;
-    cursor: pointer;
-  }
-  .checklist .item:last-child { border-bottom: 0; }
+    .card-text {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.5;
+    }
 
-  .box {
-    width: 18px;
-    height: 18px;
-    border-radius: 5px;
-    border: 2px solid #334155;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-  .box.checked {
-    background: var(--green);
-    border-color: var(--green);
-    position: relative;
-  }
-  .box.checked::after {
-    content: "✓";
-    position: absolute;
-    left: 3px;
-    top: -1px;
-    color: #02120b;
-    font-size: 12px;
-    font-weight: 700;
-  }
+    /* Tags */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
 
-  .progress {
-    margin-top: 10px;
-    border-radius: 999px;
-    overflow: hidden;
-    height: 8px;
-    background: #0d0f16;
-    border: 1px solid #1b2432;
-  }
-  .progress > div {
-    width: 0%;
-    height: 100%;
-    background: linear-gradient(90deg, var(--blue), var(--green));
-    transition: width .25s ease;
-  }
+    .tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+    }
 
-  .progress-label {
-    margin-top: 8px;
-    color: var(--muted);
-    font: 500 11px 'IBM Plex Mono', monospace;
-  }
+    /* Checklist */
+    .checklist {
+      list-style: none;
+    }
 
-  footer {
-    margin-top: 16px;
-    text-align: center;
-    color: var(--muted);
-    font: 500 11px 'IBM Plex Mono', monospace;
-    padding-top: 14px;
-    border-top: 1px solid var(--border);
-  }
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
 
-  @media (max-width: 980px) {
-    .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
+    .checklist-item:last-child {
+      border-bottom: none;
+    }
 
-  @media (max-width: 760px) {
-    .shell { padding: 18px 14px 60px; }
-    .hero { padding: 30px 20px 24px; border-radius: 20px; }
-    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-    .tabs { padding: 6px; }
-    .tab { width: 100%; text-align: left; }
-  }
-</style>
+    .checklist-item:hover {
+      opacity: 0.8;
+    }
+
+    .checkbox {
+      width: 20px;
+      height: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: all 0.2s;
+    }
+
+    .checklist-item.checked .checkbox {
+      background: var(--text-main);
+      border-color: var(--text-main);
+    }
+
+    .checklist-item.checked .checkbox::after {
+      content: '';
+      width: 4px;
+      height: 8px;
+      border: solid var(--bg);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      margin-top: -2px;
+    }
+
+    .checklist-text {
+      font-size: 15px;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .checklist-item.checked .checklist-text {
+      color: var(--text-main);
+      text-decoration: line-through;
+      text-decoration-color: rgba(255,255,255,0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .sidebar { width: 220px; padding: 40px 24px; }
+      .main-content { padding: 48px 40px 100px; }
+    }
+
+    @media (max-width: 768px) {
+      .app-container { flex-direction: column; }
+      .sidebar { 
+        width: 100%; 
+        height: auto; 
+        position: relative; 
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 24px;
+      }
+      .nav-menu { flex-direction: row; overflow-x: auto; padding-bottom: 8px; }
+      .nav-link { white-space: nowrap; }
+      .main-content { padding: 40px 24px 80px; }
+      .col-span-4, .col-span-6, .col-span-8 { grid-column: span 12; }
+    }
+  </style>
 </head>
 <body>
-  <main class="shell">
-    <header class="hero">
-      <div class="eyebrow">SWE self-study program</div>
-      <h1>Become a <span class="accent">Software Engineer</span><br>without a degree</h1>
-      <p class="subtitle">A professional roadmap built from industry expectations: curriculum, project milestones, job paths, and salary bands. Learn online, build proof, and become employable.</p>
-      <div class="hero-meta">
-        <span class="meta-chip">Practical curriculum</span>
-        <span class="meta-chip">Portfolio-first</span>
-        <span class="meta-chip">Interview aligned</span>
+
+  <div class="app-container">
+    
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-eyebrow">Program</div>
+        <div class="brand-title">SWE Blueprint</div>
       </div>
-    </header>
+      <ul class="nav-menu">
+        <li><a href="#intro" class="nav-link active">Introduction</a></li>
+        <li><a href="#path" class="nav-link">Learning Path</a></li>
+        <li><a href="#resources" class="nav-link">Resources</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#jobs" class="nav-link">Jobs & Salary</a></li>
+        <li><a href="#ready" class="nav-link">Readiness</a></li>
+      </ul>
+    </aside>
 
-    <nav class="tabs">
-      <button class="tab active" onclick="showTab('path', this)">Learning Path</button>
-      <button class="tab" onclick="showTab('resources', this)">Resources</button>
-      <button class="tab" onclick="showTab('projects', this)">Projects</button>
-      <button class="tab" onclick="showTab('jobs', this)">Jobs & Salary</button>
-      <button class="tab" onclick="showTab('ready', this)">Readiness</button>
-      <button class="tab" onclick="showTab('tips', this)">Mentor Notes</button>
-    </nav>
+    <main class="main-content">
+      
+      <section id="intro" class="is-visible">
+        <div class="section-header">
+          <h1 class="section-title" style="font-size: 48px;">Become a Software Engineer without a degree.</h1>
+          <p class="section-subtitle" style="font-size: 18px;">A professional roadmap built from industry expectations: curriculum, project milestones, job paths, and salary bands. Learn online, build proof, and become employable.</p>
+        </div>
+      </section>
 
-    <section class="section active" id="path">
-      <div class="quote">"You do not need a formal degree to become an engineer. You need consistent execution, project evidence, and strong technical communication."</div>
-      <div class="grid-2">
-        <article class="card phase">
-          <div class="kicker">Phase 1 · Months 0-6</div>
-          <h3>Core Programming Foundations</h3>
-          <p>Build Python fluency, algorithmic thinking, CLI habits, Git workflow, and first-principles debugging.</p>
-          <div class="chips"><span class="chip">Python</span><span class="chip">Git</span><span class="chip">CLI</span><span class="chip">Big-O basics</span></div>
-        </article>
-        <article class="card phase p2">
-          <div class="kicker">Phase 2 · Months 6-12</div>
-          <h3>Web + Data Structures</h3>
-          <p>Learn modern frontend, backend APIs, SQL modeling, and interview-grade DS&A patterns.</p>
-          <div class="chips"><span class="chip">JavaScript</span><span class="chip">React</span><span class="chip">Node</span><span class="chip">PostgreSQL</span></div>
-        </article>
-        <article class="card phase p3">
-          <div class="kicker">Phase 3 · Months 12-18</div>
-          <h3>Systems + Cloud Engineering</h3>
-          <p>Develop production awareness with Docker, testing, deployment, observability, and system design fundamentals.</p>
-          <div class="chips"><span class="chip">Docker</span><span class="chip">AWS</span><span class="chip">CI/CD</span><span class="chip">TypeScript</span></div>
-        </article>
-        <article class="card phase p4">
-          <div class="kicker">Phase 4 · Months 18-24</div>
-          <h3>Professional SWE Readiness</h3>
-          <p>Ship polished portfolio projects, practice interviews, contribute to open source, and prepare for hiring loops.</p>
-          <div class="chips"><span class="chip">System design</span><span class="chip">LeetCode</span><span class="chip">Code review</span><span class="chip">Portfolio</span></div>
-        </article>
-      </div>
-    </section>
+      <section id="path" class="scroll-section">
+        <div class="section-header">
+          <h2 class="section-title">Learning Path</h2>
+          <p class="section-subtitle">Consistent execution and project evidence over formal degrees.</p>
+        </div>
+        <div class="bento-grid">
+          <div class="bento-card col-span-6">
+            <span class="card-kicker">Phase 1 · Months 0-6</span>
+            <h3 class="card-title">Core Programming Foundations</h3>
+            <p class="card-text">Build Python fluency, algorithmic thinking, CLI habits, Git workflow, and first-principles debugging.</p>
+            <div class="tags">
+              <span class="tag">Python</span><span class="tag">Git</span><span class="tag">CLI</span><span class="tag">Algorithms</span>
+            </div>
+          </div>
+          <div class="bento-card col-span-6">
+            <span class="card-kicker">Phase 2 · Months 6-12</span>
+            <h3 class="card-title">Web & Data Structures</h3>
+            <p class="card-text">Learn modern frontend, backend APIs, SQL modeling, and interview-grade DS&A patterns.</p>
+            <div class="tags">
+              <span class="tag">JavaScript</span><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">PostgreSQL</span>
+            </div>
+          </div>
+          <div class="bento-card col-span-6">
+            <span class="card-kicker">Phase 3 · Months 12-18</span>
+            <h3 class="card-title">Systems & Cloud Engineering</h3>
+            <p class="card-text">Develop production awareness with Docker, testing, deployment, observability, and system design fundamentals.</p>
+            <div class="tags">
+              <span class="tag">Docker</span><span class="tag">AWS</span><span class="tag">CI/CD</span><span class="tag">TypeScript</span>
+            </div>
+          </div>
+          <div class="bento-card col-span-6">
+            <span class="card-kicker">Phase 4 · Months 18-24</span>
+            <h3 class="card-title">Professional Readiness</h3>
+            <p class="card-text">Ship polished portfolio projects, practice interviews, contribute to open source, and prepare for hiring loops.</p>
+            <div class="tags">
+              <span class="tag">System Design</span><span class="tag">LeetCode</span><span class="tag">Portfolio</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <section class="section" id="resources">
-      <div class="quote">Use free resources as default. Pay only for focused acceleration in system design and interview prep.</div>
-      <h2 class="section-title">Recommended Curriculum Sources</h2>
-      <div class="grid-3">
-        <article class="card resource"><h3>CS50x + CS50P</h3><p>Computer science and Python foundations with robust exercises.</p><span class="tag free">Free</span></article>
-        <article class="card resource"><h3>The Odin Project</h3><p>Structured full-stack training with practical deliverables.</p><span class="tag free">Free</span></article>
-        <article class="card resource"><h3>NeetCode 150</h3><p>Pattern-driven algorithm roadmap for interview problem solving.</p><span class="tag free">Free</span></article>
-        <article class="card resource"><h3>React + MDN</h3><p>Official docs for frontend fundamentals and modern JavaScript.</p><span class="tag free">Free</span></article>
-        <article class="card resource"><h3>Docker + AWS Skill Builder</h3><p>Hands-on cloud and deployment competency path.</p><span class="tag free">Free</span></article>
-        <article class="card resource"><h3>Grokking System Design</h3><p>Optional paid prep for architecture interview scenarios.</p><span class="tag paid">Paid</span></article>
-      </div>
-    </section>
+      <section id="resources" class="scroll-section">
+        <div class="section-header">
+          <h2 class="section-title">Resources</h2>
+          <p class="section-subtitle">Use free resources as default. Pay only for focused acceleration.</p>
+        </div>
+        <div class="bento-grid">
+          <div class="bento-card col-span-4">
+            <h3 class="card-title">CS50x + CS50P</h3>
+            <p class="card-text">Computer science and Python foundations with robust exercises.</p>
+            <div class="tags"><span class="tag">Free</span></div>
+          </div>
+          <div class="bento-card col-span-4">
+            <h3 class="card-title">The Odin Project</h3>
+            <p class="card-text">Structured full-stack training with practical deliverables.</p>
+            <div class="tags"><span class="tag">Free</span></div>
+          </div>
+          <div class="bento-card col-span-4">
+            <h3 class="card-title">NeetCode 150</h3>
+            <p class="card-text">Pattern-driven algorithm roadmap for interview problem solving.</p>
+            <div class="tags"><span class="tag">Free</span></div>
+          </div>
+          <div class="bento-card col-span-4">
+            <h3 class="card-title">React + MDN</h3>
+            <p class="card-text">Official docs for frontend fundamentals and modern JavaScript.</p>
+            <div class="tags"><span class="tag">Free</span></div>
+          </div>
+          <div class="bento-card col-span-4">
+            <h3 class="card-title">Docker + AWS</h3>
+            <p class="card-text">Hands-on cloud and deployment competency path via Skill Builder.</p>
+            <div class="tags"><span class="tag">Free</span></div>
+          </div>
+          <div class="bento-card col-span-4">
+            <h3 class="card-title">Grokking Systems</h3>
+            <p class="card-text">Optional paid prep for architecture interview scenarios.</p>
+            <div class="tags"><span class="tag">Paid</span></div>
+          </div>
+        </div>
+      </section>
 
-    <section class="section" id="projects">
-      <div class="quote">Each project should unlock a new engineering capability. Avoid repeating the same stack without added complexity.</div>
-      <div class="grid-2">
-        <article class="card"><h3>CLI Automation Utility</h3><p>Build a robust command-line tool with configs, logging, and error recovery.</p><div class="chips"><span class="chip">Python</span><span class="chip">Automation</span><span class="chip">Logging</span></div></article>
-        <article class="card"><h3>Full-Stack Product with Auth</h3><p>Create user auth, protected routes, CRUD flows, and relational data model.</p><div class="chips"><span class="chip">React</span><span class="chip">Express</span><span class="chip">JWT</span></div></article>
-        <article class="card"><h3>Cloud-Deployed SaaS MVP</h3><p>Containerize and deploy with environment separation and CI checks.</p><div class="chips"><span class="chip">Docker</span><span class="chip">Cloud</span><span class="chip">CI/CD</span></div></article>
-        <article class="card"><h3>Capstone Showcase</h3><p>One flagship project with tests, architecture notes, and polished README.</p><div class="chips"><span class="chip">Architecture</span><span class="chip">Testing</span><span class="chip">Docs</span></div></article>
-      </div>
-    </section>
+      <section id="projects" class="scroll-section">
+        <div class="section-header">
+          <h2 class="section-title">Projects</h2>
+          <p class="section-subtitle">Each project should unlock a new engineering capability. Avoid repeating the same stack.</p>
+        </div>
+        <div class="bento-grid">
+          <div class="bento-card col-span-6">
+            <h3 class="card-title">CLI Automation Utility</h3>
+            <p class="card-text">Build a robust command-line tool with configs, logging, and error recovery.</p>
+          </div>
+          <div class="bento-card col-span-6">
+            <h3 class="card-title">Full-Stack Product</h3>
+            <p class="card-text">Create user auth, protected routes, CRUD flows, and relational data model.</p>
+          </div>
+          <div class="bento-card col-span-6">
+            <h3 class="card-title">Cloud-Deployed SaaS MVP</h3>
+            <p class="card-text">Containerize and deploy with environment separation and CI checks.</p>
+          </div>
+          <div class="bento-card col-span-6">
+            <h3 class="card-title">Capstone Showcase</h3>
+            <p class="card-text">One flagship project with tests, architecture notes, and polished README.</p>
+          </div>
+        </div>
+      </section>
 
-    <section class="section" id="jobs">
-      <div class="quote">SWE skills open product, platform, infrastructure, and AI implementation roles across startups and enterprise companies.</div>
-      <h2 class="section-title">SWE Roles You Can Target + Salary Ranges (USD)</h2>
-      <div class="grid-4">
-        <article class="card salary"><h3>Junior SWE</h3><div class="range">$65k - $105k</div><p>Feature implementation, bug fixes, and team-based delivery.</p></article>
-        <article class="card salary"><h3>Mid-Level SWE</h3><div class="range">$100k - $160k</div><p>Own features end-to-end and mentor junior engineers.</p></article>
-        <article class="card salary"><h3>Senior SWE</h3><div class="range">$150k - $250k+</div><p>Lead technical direction for complex systems.</p></article>
-        <article class="card salary"><h3>Full-Stack Engineer</h3><div class="range">$90k - $170k</div><p>Develop product experiences across frontend and backend.</p></article>
-        <article class="card salary"><h3>Backend Engineer</h3><div class="range">$105k - $190k</div><p>APIs, databases, reliability, and high-scale services.</p></article>
-        <article class="card salary"><h3>DevOps / Platform</h3><div class="range">$110k - $200k</div><p>Infrastructure automation, CI/CD, and system reliability.</p></article>
-        <article class="card salary alt"><h3>ML / AI Engineer</h3><div class="range">$130k - $300k+</div><p>Model integration, inference systems, and AI productization.</p></article>
-        <article class="card salary alt"><h3>Freelance SWE</h3><div class="range">$40 - $150+ / hr</div><p>Contract and consulting work with high flexibility.</p></article>
-      </div>
-      <div class="card" style="margin-top:12px;">
-        Salary depends on country, company stage, specialization, and interview performance. These are realistic bands, not guarantees.
-      </div>
-    </section>
+      <section id="jobs" class="scroll-section">
+        <div class="section-header">
+          <h2 class="section-title">Jobs & Salary</h2>
+          <p class="section-subtitle">Roles you can target and realistic salary bands (USD).</p>
+        </div>
+        <div class="bento-grid">
+          <div class="bento-card col-span-4">
+            <span class="card-kicker">$65k - $105k</span>
+            <h3 class="card-title">Junior SWE</h3>
+            <p class="card-text">Feature implementation, bug fixes, and team-based delivery.</p>
+          </div>
+          <div class="bento-card col-span-4">
+            <span class="card-kicker">$100k - $160k</span>
+            <h3 class="card-title">Mid-Level SWE</h3>
+            <p class="card-text">Own features end-to-end and mentor junior engineers.</p>
+          </div>
+          <div class="bento-card col-span-4">
+            <span class="card-kicker">$150k - $250k+</span>
+            <h3 class="card-title">Senior SWE</h3>
+            <p class="card-text">Lead technical direction for complex systems.</p>
+          </div>
+          <div class="bento-card col-span-4">
+            <span class="card-kicker">$90k - $170k</span>
+            <h3 class="card-title">Full-Stack Engineer</h3>
+            <p class="card-text">Develop product experiences across frontend and backend.</p>
+          </div>
+          <div class="bento-card col-span-4">
+            <span class="card-kicker">$105k - $190k</span>
+            <h3 class="card-title">Backend Engineer</h3>
+            <p class="card-text">APIs, databases, reliability, and high-scale services.</p>
+          </div>
+          <div class="bento-card col-span-4">
+            <span class="card-kicker">$110k - $200k</span>
+            <h3 class="card-title">DevOps / Platform</h3>
+            <p class="card-text">Infrastructure automation, CI/CD, and system reliability.</p>
+          </div>
+        </div>
+      </section>
 
-    <section class="section" id="ready">
-      <div class="quote">Readiness means repeatable skill execution in real project contexts, not perfect confidence.</div>
-      <article class="card checklist">
-        <h2 class="section-title" style="margin-top:0;">Job Readiness Checklist</h2>
-        <div class="item" onclick="toggleCheck(this)"><div class="box"></div><div>You can explain HTTP request flow end-to-end.</div></div>
-        <div class="item" onclick="toggleCheck(this)"><div class="box"></div><div>You solved 120+ DSA problems by pattern.</div></div>
-        <div class="item" onclick="toggleCheck(this)"><div class="box"></div><div>You have 2+ deployed projects with clean READMEs.</div></div>
-        <div class="item" onclick="toggleCheck(this)"><div class="box"></div><div>You can debug using logs and stack traces.</div></div>
-        <div class="item" onclick="toggleCheck(this)"><div class="box"></div><div>You can explain architecture tradeoffs clearly.</div></div>
-        <div class="item" onclick="toggleCheck(this)"><div class="box"></div><div>You completed mock technical and behavioral interviews.</div></div>
-        <div class="progress"><div id="progressBar"></div></div>
-        <div class="progress-label" id="progressLabel">0 / 6 complete - build proof through shipped work.</div>
-      </article>
-    </section>
+      <section id="ready" class="scroll-section">
+        <div class="section-header">
+          <h2 class="section-title">Readiness Checklist</h2>
+          <p class="section-subtitle">Readiness means repeatable skill execution in real project contexts, not perfect confidence.</p>
+        </div>
+        <div class="bento-card col-span-12">
+          <ul class="checklist" id="checklist">
+            <li class="checklist-item" onclick="this.classList.toggle('checked')">
+              <div class="checkbox"></div>
+              <span class="checklist-text">You can explain HTTP request flow end-to-end.</span>
+            </li>
+            <li class="checklist-item" onclick="this.classList.toggle('checked')">
+              <div class="checkbox"></div>
+              <span class="checklist-text">You solved 120+ DSA problems by pattern.</span>
+            </li>
+            <li class="checklist-item" onclick="this.classList.toggle('checked')">
+              <div class="checkbox"></div>
+              <span class="checklist-text">You have 2+ deployed projects with clean READMEs.</span>
+            </li>
+            <li class="checklist-item" onclick="this.classList.toggle('checked')">
+              <div class="checkbox"></div>
+              <span class="checklist-text">You can debug using logs and stack traces.</span>
+            </li>
+            <li class="checklist-item" onclick="this.classList.toggle('checked')">
+              <div class="checkbox"></div>
+              <span class="checklist-text">You can explain architecture tradeoffs clearly.</span>
+            </li>
+            <li class="checklist-item" onclick="this.classList.toggle('checked')">
+              <div class="checkbox"></div>
+              <span class="checklist-text">You completed mock technical and behavioral interviews.</span>
+            </li>
+          </ul>
+        </div>
+      </section>
 
-    <section class="section" id="tips">
-      <div class="grid-2">
-        <article class="card"><h3>Choose one path and finish it</h3><p>Consistency beats endless resource switching.</p></article>
-        <article class="card"><h3>Ship early, ship often</h3><p>Projects create evidence and expose gaps fast.</p></article>
-        <article class="card"><h3>Document your work</h3><p>Strong READMEs and notes improve hiring outcomes.</p></article>
-        <article class="card"><h3>Apply before feeling ready</h3><p>Interview loops are part of your training process.</p></article>
-      </div>
-    </section>
-
-    <footer>SWE self-study blueprint · built for real-world employability</footer>
-  </main>
+    </main>
+  </div>
 
   <script>
-    function showTab(id, btn) {
-      document.querySelectorAll('.section').forEach((section) => section.classList.remove('active'));
-      document.querySelectorAll('.tab').forEach((tab) => tab.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      btn.classList.add('active');
-    }
+    // Scroll spy
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
 
-    function toggleCheck(item) {
-      const box = item.querySelector('.box');
-      box.classList.toggle('checked');
-      updateProgress();
-    }
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.3
+    };
 
-    function updateProgress() {
-      const total = document.querySelectorAll('.checklist .box').length;
-      const checked = document.querySelectorAll('.checklist .box.checked').length;
-      const percent = Math.round((checked / total) * 100);
-      document.getElementById('progressBar').style.width = percent + '%';
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${id}`) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
 
-      let label = 'build proof through shipped work.';
-      if (percent >= 34 && percent < 67) label = 'strong momentum - keep shipping.';
-      if (percent >= 67) label = 'you are close to ready - start applying.';
-      if (percent === 100) label = 'ready for broad SWE applications.';
-
-      document.getElementById('progressLabel').textContent = checked + ' / ' + total + ' complete - ' + label;
-    }
+    sections.forEach(section => {
+      observer.observe(section);
+    });
   </script>
 </body>
 </html>
