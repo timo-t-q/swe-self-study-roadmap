@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SWE Self-Study Blueprint</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #09090f;
+    --surface: #111118;
+    --surface-2: #0d0d17;
+    --border: #1e1e2e;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --soft: #94a3b8;
+    --blue: #3b82f6;
+    --blue-dim: #1d3461;
+    --green: #10b981;
+    --green-dim: #064e3b;
+    --amber: #f59e0b;
+    --amber-dim: #78350f;
+    --purple: #a78bfa;
+    --purple-dim: #2e1065;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    min-height: 100vh;
+    color: var(--text);
+    background:
+      radial-gradient(1200px 600px at -10% -20%, #1d346138, transparent 60%),
+      radial-gradient(900px 500px at 110% 0%, #064e3b2d, transparent 55%),
+      radial-gradient(600px 300px at 50% 120%, #2e10652b, transparent 60%),
+      var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.65;
+    font-size: 15px;
+  }
+
+  .shell {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 18px 70px;
+  }
+
+  header {
+    border: 1px solid var(--border);
+    background: linear-gradient(165deg, #10101a 0%, #0d0d16 100%);
+    border-radius: 22px;
+    padding: 34px 26px 30px;
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 35%, #3b82f60d 55%, transparent 80%);
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    font: 500 11px 'DM Mono', monospace;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4.8vw, 3.4rem);
+    line-height: 1.08;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+
+  h1 span { color: var(--blue); }
+
+  .subtitle {
+    max-width: 760px;
+    color: var(--soft);
+  }
+
+  .meta-row {
+    margin-top: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .pill {
+    padding: 5px 11px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--muted);
+    font: 500 11px 'DM Mono', monospace;
+    letter-spacing: .06em;
+  }
+
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .tab {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 8px 16px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 13px;
+    transition: .2s;
+  }
+
+  .tab:hover { color: var(--text); border-color: #334155; }
+  .tab.active { color: var(--blue); border-color: var(--blue); background: #0d1a2f; }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+
+  .quote {
+    font-style: italic;
+    color: var(--soft);
+    border-left: 3px solid var(--blue);
+    background: var(--surface-2);
+  }
+
+  .section-title {
+    margin: 10px 0 10px;
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  .phase-grid,
+  .resource-grid,
+  .project-grid,
+  .salary-grid,
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .phase, .resource, .project, .salary, .tip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+  }
+
+  .phase { border-top: 2px solid var(--blue); }
+  .phase.y2 { border-top-color: var(--green); }
+  .phase.y3 { border-top-color: var(--amber); }
+  .phase.y4 { border-top-color: var(--purple); }
+
+  .kicker {
+    font: 500 10px 'DM Mono', monospace;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 7px;
+  }
+
+  .phase h3, .resource h3, .project h3, .salary h3, .tip h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .chip {
+    padding: 2px 8px;
+    border-radius: 6px;
+    font: 500 10.5px 'DM Mono', monospace;
+    border: 1px solid var(--border);
+    background: #141420;
+    color: var(--soft);
+  }
+
+  .resource { display: flex; flex-direction: column; gap: 8px; }
+  .resource .tag {
+    align-self: flex-start;
+    padding: 2px 8px;
+    border-radius: 5px;
+    font: 500 10px 'DM Mono', monospace;
+  }
+  .tag.free { background: #052e1e; color: #6ee7b7; border: 1px solid var(--green-dim); }
+  .tag.paid { background: #2a1200; color: #fcd34d; border: 1px solid var(--amber-dim); }
+
+  .salary .range {
+    color: #93c5fd;
+    font: 500 12px 'DM Mono', monospace;
+    margin-bottom: 6px;
+  }
+  .salary.cy .range { color: #6ee7b7; }
+
+  .checklist .item {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #1a1a28;
+    cursor: pointer;
+  }
+  .checklist .item:last-child { border-bottom: 0; }
+  .box {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 2px solid #334155;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .box.checked { background: var(--green); border-color: var(--green); position: relative; }
+  .box.checked::after {
+    content: "✓";
+    position: absolute;
+    color: #000;
+    font-size: 12px;
+    left: 3px;
+    top: -1px;
+    font-weight: 700;
+  }
+
+  .progress {
+    margin-top: 10px;
+    background: var(--surface-2);
+    border-radius: 999px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .progress > div {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--blue), var(--green));
+    transition: width .25s ease;
+  }
+
+  .progress-label {
+    margin-top: 8px;
+    color: var(--muted);
+    font: 500 11px 'DM Mono', monospace;
+  }
+
+  footer {
+    margin-top: 14px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    text-align: center;
+    color: var(--muted);
+    font: 500 11px 'DM Mono', monospace;
+  }
+
+  @media (max-width: 760px) {
+    .phase-grid,
+    .resource-grid,
+    .project-grid,
+    .salary-grid,
+    .tips-grid {
+      grid-template-columns: 1fr;
+    }
+
+    header { padding: 26px 18px 24px; }
+  }
+</style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div class="eyebrow">SWE only · self-study track</div>
+      <h1>Become a <span>Software Engineer</span><br>without a degree</h1>
+      <p class="subtitle">This roadmap turns a 4-year SWE curriculum into a practical online path: what to learn, in what order, what to build, and how to know when you are job-ready.</p>
+      <div class="meta-row">
+        <span class="pill">Built for self-learners</span>
+        <span class="pill">Project-first approach</span>
+        <span class="pill">Free resources prioritized</span>
+      </div>
+    </header>
+
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('path', this)">Learning Path</button>
+      <button class="tab" onclick="showTab('resources', this)">Resources</button>
+      <button class="tab" onclick="showTab('projects', this)">Projects</button>
+      <button class="tab" onclick="showTab('jobs', this)">Jobs & Salary</button>
+      <button class="tab" onclick="showTab('ready', this)">Readiness</button>
+      <button class="tab" onclick="showTab('tips', this)">Mentor Notes</button>
+    </div>
+
+    <section class="section active" id="path">
+      <div class="card quote">"You do not need a degree to become a strong engineer. You need structure, deliberate practice, and shipped projects."</div>
+      <div class="phase-grid">
+        <article class="phase">
+          <div class="kicker">Phase 1 · Months 0-6</div>
+          <h3>Programming Foundations</h3>
+          <p>Learn Python, problem decomposition, core CS mental models, command line, and Git. Focus on consistency over speed.</p>
+          <div class="chips"><span class="chip">Python</span><span class="chip">Bash</span><span class="chip">Git</span><span class="chip">Complexity basics</span></div>
+        </article>
+        <article class="phase y2">
+          <div class="kicker">Phase 2 · Months 6-12</div>
+          <h3>Web + Data Structures</h3>
+          <p>Learn HTML/CSS/JavaScript, SQL, backend basics with Node, and the DS&A patterns used in real interviews.</p>
+          <div class="chips"><span class="chip">JavaScript</span><span class="chip">React</span><span class="chip">Node</span><span class="chip">PostgreSQL</span></div>
+        </article>
+        <article class="phase y3">
+          <div class="kicker">Phase 3 · Months 12-18</div>
+          <h3>Systems + Cloud</h3>
+          <p>Learn operating systems concepts, Docker, deployment, testing, CI basics, and entry-level system design.</p>
+          <div class="chips"><span class="chip">Docker</span><span class="chip">AWS basics</span><span class="chip">Testing</span><span class="chip">TypeScript</span></div>
+        </article>
+        <article class="phase y4">
+          <div class="kicker">Phase 4 · Months 18-24</div>
+          <h3>Job-Ready Engineering</h3>
+          <p>Build 2-3 portfolio projects, practice interviews, contribute to open source, and learn to communicate technical decisions.</p>
+          <div class="chips"><span class="chip">System design</span><span class="chip">LeetCode patterns</span><span class="chip">Code review</span><span class="chip">Portfolio</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="resources">
+      <div class="card quote">Free resources are enough for fundamentals. Pay only when it saves time or gives targeted interview prep.</div>
+      <h2 class="section-title">Core Learning Stack</h2>
+      <div class="resource-grid">
+        <article class="resource"><h3>CS50x + CS50P</h3><p>Strong base in computer science and Python with real problem sets.</p><span class="tag free">FREE</span></article>
+        <article class="resource"><h3>The Odin Project</h3><p>Structured full-stack web learning with practical projects.</p><span class="tag free">FREE</span></article>
+        <article class="resource"><h3>NeetCode 150</h3><p>Best pattern-based path for DSA and interview preparation.</p><span class="tag free">FREE</span></article>
+        <article class="resource"><h3>React + MDN Docs</h3><p>Official docs for modern frontend and JavaScript fundamentals.</p><span class="tag free">FREE</span></article>
+        <article class="resource"><h3>Docker + AWS Skill Builder</h3><p>Hands-on cloud/deployment practice for production readiness.</p><span class="tag free">FREE</span></article>
+        <article class="resource"><h3>Grokking System Design</h3><p>Optional paid resource for interview-focused system design drills.</p><span class="tag paid">PAID</span></article>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="card quote">Every project should force a new skill. Do not build the same app with different colors.</div>
+      <div class="project-grid">
+        <article class="project"><h3>CLI Productivity Tool</h3><p>Python app that automates local tasks and logs output.</p><div class="chips"><span class="chip">Python</span><span class="chip">File I/O</span><span class="chip">Error handling</span></div></article>
+        <article class="project"><h3>Full-Stack App with Auth</h3><p>React + Node + PostgreSQL app with JWT auth and role-based pages.</p><div class="chips"><span class="chip">React</span><span class="chip">Express</span><span class="chip">SQL</span></div></article>
+        <article class="project"><h3>Deployable SaaS MVP</h3><p>Containerized app deployed to cloud, with logging and CI checks.</p><div class="chips"><span class="chip">Docker</span><span class="chip">Cloud</span><span class="chip">CI/CD</span></div></article>
+        <article class="project"><h3>Capstone Showpiece</h3><p>One polished project with clear README, tests, architecture notes, and live demo.</p><div class="chips"><span class="chip">Architecture</span><span class="chip">Tests</span><span class="chip">Docs</span></div></article>
+      </div>
+    </section>
+
+    <section class="section" id="jobs">
+      <div class="card quote">What SWE knowledge unlocks: product engineering, backend systems, cloud, data, and platform roles.</div>
+      <h2 class="section-title">Typical SWE Paths & Salary (USD)</h2>
+      <div class="salary-grid">
+        <article class="salary"><h3>Junior Software Engineer</h3><div class="range">$65k - $105k</div><p>Build features, fix bugs, and learn production workflows in real teams.</p></article>
+        <article class="salary"><h3>Mid-Level Software Engineer</h3><div class="range">$100k - $160k</div><p>Own features end-to-end and mentor newer developers.</p></article>
+        <article class="salary"><h3>Senior Software Engineer</h3><div class="range">$150k - $250k+</div><p>Lead complex technical decisions and high-scale implementation.</p></article>
+        <article class="salary"><h3>Full-Stack Engineer</h3><div class="range">$90k - $170k</div><p>Build and ship both frontend and backend product surfaces.</p></article>
+        <article class="salary"><h3>DevOps / Platform Engineer</h3><div class="range">$110k - $200k</div><p>Own deployment, reliability, automation, and cloud infrastructure.</p></article>
+        <article class="salary"><h3>ML / AI Engineer</h3><div class="range">$130k - $300k+</div><p>Apply SWE foundations to model deployment and AI systems.</p></article>
+        <article class="salary cy"><h3>Freelance SWE / Consultant</h3><div class="range">$40 - $150+ / hour</div><p>Project-based work for startups and businesses, remote-first opportunities.</p></article>
+        <article class="salary cy"><h3>Remote Global SWE Roles</h3><div class="range">$45k - $180k</div><p>Comp depends on region, company, and specialization level.</p></article>
+      </div>
+      <div class="card" style="margin-top:12px">
+        Salary depends on location, stack, company stage, and interview level. Use these as practical ranges, not guarantees.
+      </div>
+    </section>
+
+    <section class="section" id="ready">
+      <div class="card quote">You are ready when you can repeatedly solve real problems, not when you feel perfectly confident.</div>
+      <div class="card checklist">
+        <h2 class="section-title" style="margin-top:0">SWE Job Readiness Checklist</h2>
+        <div class="item" onclick="toggleCheck(this)"><div class="box"></div><div>You can explain HTTP request flow end-to-end.</div></div>
+        <div class="item" onclick="toggleCheck(this)"><div class="box"></div><div>You solved 120+ DSA problems by pattern, not random grind.</div></div>
+        <div class="item" onclick="toggleCheck(this)"><div class="box"></div><div>You have 2+ deployed projects with public repos and clean READMEs.</div></div>
+        <div class="item" onclick="toggleCheck(this)"><div class="box"></div><div>You can debug issues from logs and tracebacks.</div></div>
+        <div class="item" onclick="toggleCheck(this)"><div class="box"></div><div>You can discuss tradeoffs in your architecture decisions.</div></div>
+        <div class="item" onclick="toggleCheck(this)"><div class="box"></div><div>You practiced mock interviews (technical + behavioral).</div></div>
+        <div class="progress"><div id="progressBar"></div></div>
+        <div class="progress-label" id="progressLabel">0 / 6 complete - start with one project milestone.</div>
+      </div>
+    </section>
+
+    <section class="section" id="tips">
+      <div class="tips-grid">
+        <article class="tip"><h3>Stay on one path</h3><p>Do one curriculum end-to-end before switching resources.</p></article>
+        <article class="tip"><h3>Build before confident</h3><p>Waiting to feel ready delays growth; shipping creates feedback.</p></article>
+        <article class="tip"><h3>Write while learning</h3><p>Keep engineering notes to strengthen recall and interview clarity.</p></article>
+        <article class="tip"><h3>Apply early</h3><p>Start applying 4-6 months before your target date.</p></article>
+      </div>
+    </section>
+
+    <footer>SWE self-study roadmap · practical alternative to formal degree</footer>
+  </div>
+
+  <script>
+    function showTab(id, btn) {
+      document.querySelectorAll('.section').forEach((section) => section.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach((tab) => tab.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    function toggleCheck(item) {
+      const box = item.querySelector('.box');
+      box.classList.toggle('checked');
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const total = document.querySelectorAll('.checklist .box').length;
+      const checked = document.querySelectorAll('.checklist .box.checked').length;
+      const percent = Math.round((checked / total) * 100);
+      document.getElementById('progressBar').style.width = percent + '%';
+      const msg = percent < 40 ? 'keep building fundamentals.' : percent < 80 ? 'strong progress - keep shipping.' : 'ready to apply broadly.';
+      document.getElementById('progressLabel').textContent = checked + ' / ' + total + ' complete - ' + msg;
+    }
+  </script>
+</body>
+</html>
