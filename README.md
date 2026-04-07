@@ -9,9 +9,7 @@ This project presents a structured path from zero to job-ready SWE skills, inclu
 - job role targets with salary ranges,
 - readiness checklist for applications.
 
-## Live Repository
 
-- GitHub: https://github.com/timo-t-q/swe-self-study-roadmap
 
 ## Project Goals
 
@@ -51,28 +49,7 @@ This project presents a structured path from zero to job-ready SWE skills, inclu
 - Vanilla JavaScript
 - Google Fonts (Syne, Manrope, IBM Plex Mono)
 
-## Run Locally
 
-No build process required.
-
-1. Clone the repository
-2. Open `index.html` in your browser
-
-Optional local server:
-
-```bash
-python3 -m http.server 8080
-```
-
-Then visit `http://localhost:8080`.
-
-## Design Direction
-
-- Dark, premium interface
-- Clear visual hierarchy for readability
-- Card-based modular information architecture
-- Subtle motion and progressive disclosure via tabs
-- Mobile-first responsive behavior
 
 ## Notes
 
@@ -81,4 +58,4 @@ Then visit `http://localhost:8080`.
 
 ## License
 
-Open for personal learning and adaptation.
+MIT
